@@ -109,8 +109,17 @@ export async function GET(request: Request) {
     }
     
     // URLからクエリパラメータを取得
-    const { searchParams } = new URL(request.url);
-    const orderId = searchParams.get("id");
+    let orderId = null;
+    try {
+      const url = request.url;
+      if (url && url.trim() !== '') {
+        const { searchParams } = new URL(url);
+        orderId = searchParams.get("id");
+      }
+    } catch (urlError) {
+      console.error("URL解析エラー:", urlError);
+      // URLエラーが発生した場合は、orderId = nullのままにする
+    }
     
     if (orderId) {
       // 特定の注文を取得

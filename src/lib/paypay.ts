@@ -15,12 +15,16 @@ console.log('PayPay SDK Configuration:', {
 });
 
 // PayPay APIの設定
-PAYPAY.Configure({
-  env: environment,
-  clientId: apiKey,
-  clientSecret: apiSecret,
-  merchantId: merchantId,
-});
+if (apiKey && apiSecret && merchantId) {
+  PAYPAY.Configure({
+    env: environment,
+    clientId: apiKey,
+    clientSecret: apiSecret,
+    merchantId: merchantId,
+  });
+} else {
+  console.warn('PayPay SDK not configured due to missing environment variables');
+}
 
 interface PayPaySuccessResponse {
   resultInfo: {
