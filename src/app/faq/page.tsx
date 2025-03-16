@@ -1,9 +1,9 @@
 'use client';
 
+import React from 'react';
 import { useState } from "react";
 import Link from "next/link";
-import { Coffee, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ExternalLink, Coffee } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -106,6 +106,18 @@ export default function FAQPage() {
                     クレジットカード（VISA、MasterCard、JCB、American Express）、PayPal、銀行振込、コンビニ決済に対応しています。銀行振込とコンビニ決済の場合、入金確認後の発送となります。
                   </AccordionContent>
                 </AccordionItem>
+
+                <AccordionItem value="item-9">
+                  <AccordionTrigger className="text-lg font-medium">
+                    特定商取引法に基づく表記はどこで確認できますか？
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-600">
+                    <Link href="/legal" className="text-amber-700 hover:underline">
+                      こちらのページ
+                    </Link>
+                    で確認いただけます。販売業者情報、運営責任者、所在地、連絡先、返品・交換についての詳細な情報を掲載しています。
+                  </AccordionContent>
+                </AccordionItem>
               </Accordion>
             </div>
           </div>
@@ -192,6 +204,11 @@ export default function FAQPage() {
                 <li>
                   <Link href="/faq" className="text-sm text-gray-500 hover:text-amber-700">
                     よくある質問
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/legal" className="text-sm text-gray-500 hover:text-amber-700">
+                    特定商取引法に基づく表記
                   </Link>
                 </li>
               </ul>

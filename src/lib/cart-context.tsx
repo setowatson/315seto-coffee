@@ -7,8 +7,9 @@ export interface CartItem {
   id: string;
   name: string;
   price: number;
-  imageUrl: string;
+  image: string;
   quantity: number;
+  grindType: string;
 }
 
 // カートコンテキストの型定義

@@ -1,53 +1,72 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { CartItem, ShippingInfo } from '@/shared/types/order';
+import { ShippingInfo } from '@/shared/types/order';
 
 interface PaymentFormProps {
-  items: CartItem[];
+  amount: number;
   shippingInfo: ShippingInfo;
-  totalAmount: number;
-  onPaymentSubmit: () => void;
+  onComplete: () => void;
 }
 
 export function PaymentForm({
-  items,
+  amount,
   shippingInfo,
-  totalAmount,
-  onPaymentSubmit,
+  onComplete,
 }: PaymentFormProps) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // 決済を開始する関数
+  const handlePaymentSubmit = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/payment/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount,
+          orderDescription: `SETO Coffee Order - ¥${amount.toLocaleString()}`,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || '決済の作成に失敗しました');
+      }
+
+      // PayPayの決済ページまたはアプリに遷移
+      if (result.data.deepLink && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // モバイルの場合はアプリに遷移
+        window.location.href = result.data.deepLink;
+      } else {
+        // PCの場合はWebページに遷移
+        window.location.href = result.data.url;
+      }
+
+      // 注文完了ページへの遷移はPayPayからのコールバックで処理
+    } catch (error) {
+      setError(error instanceof Error ? error.message : '決済の作成に失敗しました');
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="space-y-8">
       <Card>
         <CardContent className="p-6">
           <h2 className="text-xl font-semibold mb-4">注文内容</h2>
           <div className="space-y-4">
-            {items.map((item) => (
-              <div key={item.id} className="flex items-center space-x-4">
-                <div className="relative w-16 h-16">
-                  <Image
-                    src={item.image || '/images/coffee-placeholder.jpg'}
-                    alt={item.name}
-                    fill
-                    className="object-cover rounded-md"
-                  />
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium">{item.name}</p>
-                  <p className="text-sm text-gray-600">
-                    数量: {item.quantity} × ¥{item.price.toLocaleString()}
-                  </p>
-                </div>
-                <p className="font-semibold">
-                  ¥{(item.price * item.quantity).toLocaleString()}
-                </p>
-              </div>
-            ))}
             <div className="border-t pt-4">
               <p className="text-lg font-semibold flex justify-between">
                 <span>合計</span>
-                <span>¥{totalAmount.toLocaleString()}</span>
+                <span>¥{amount.toLocaleString()}</span>
               </p>
             </div>
           </div>
@@ -88,8 +107,19 @@ export function PaymentForm({
               </div>
               <span className="text-green-600">利用可能</span>
             </div>
-            <Button onClick={onPaymentSubmit} className="w-full">
-              PayPayで支払う
+
+            {error && (
+              <div className="p-4 bg-red-50 text-red-600 rounded-lg">
+                {error}
+              </div>
+            )}
+
+            <Button
+              onClick={handlePaymentSubmit}
+              disabled={loading}
+              className="w-full"
+            >
+              {loading ? '処理中...' : 'PayPayで支払う'}
             </Button>
           </div>
         </CardContent>
