@@ -10,7 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/layout/navbar/navbar";
 
 export default function FAQPage() {
   return (

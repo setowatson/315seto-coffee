@@ -2,7 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, Coffee, Gift, Info, User, HelpCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Navbar from "@/components/navbar"
+import Navbar from "@/components/layout/navbar/navbar"
 
 export default function Home() {
   return (
@@ -87,7 +87,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col items-center space-y-4 text-center bg-white p-6 rounded-xl shadow-sm">
                 <div className="w-20 h-20 rounded-full overflow-hidden mb-2 bg-amber-100 flex items-center justify-center">
-                  <Image 
+        <Image
                     src="/images/about-image-2.jpeg" 
                     alt="毎日のちょっとした贅沢に" 
                     width={80}
@@ -125,7 +125,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="relative aspect-video rounded-2xl overflow-hidden shadow-lg">
-                <Image
+            <Image
                   src="/images/coffee-beans-closeup.jpeg"
                   alt="コーヒー豆のイメージ"
                   width={600}
@@ -299,7 +299,7 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-          </div>
+        </div>
         </section>
       </main>
       
@@ -359,17 +359,17 @@ export default function Home() {
                 <a 
                   href="https://www.instagram.com/shu_no_kristoff?igsh=MWJpdmk4eHAyNGZwNA%3D%3D&utm_source=qr" 
                   className="text-sm text-gray-500 hover:text-amber-700"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+          target="_blank"
+          rel="noopener noreferrer"
+        >
                   Instagram
-                </a>
-                <a 
+        </a>
+        <a
                   href="https://rogue-boat-75a.notion.site/Seto-s-Diary-1aacf2b416868011bcbbf441df15a054" 
                   className="text-sm text-gray-500 hover:text-amber-700"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+          target="_blank"
+          rel="noopener noreferrer"
+        >
                   Blog
                 </a>
               </div>

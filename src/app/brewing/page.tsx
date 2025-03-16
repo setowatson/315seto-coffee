@@ -7,7 +7,7 @@ import { ArrowRight, Coffee, Thermometer, Clock, Droplet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/layout/navbar/navbar";
 
 export default function BrewingPage() {
   const [activeTab, setActiveTab] = useState("drip-bag");

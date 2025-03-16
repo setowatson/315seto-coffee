@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Coffee } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/layout/navbar/navbar";
+import { Metadata } from "next";
 
 export default function AboutPage() {
   return (

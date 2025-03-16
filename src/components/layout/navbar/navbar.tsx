@@ -6,7 +6,7 @@ import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { Coffee, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import CartIcon from "./cart-icon";
+import CartIcon from "@/components/features/cart/cart-icon";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
