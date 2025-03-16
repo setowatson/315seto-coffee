@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createQRCodePayment } from '@/lib/paypay';
 import { v4 as uuidv4 } from 'uuid';
 
+// このルートは動的に生成されるため、ビルド時には実行されない
+export const dynamic = 'force-dynamic';
+
 // PayPay APIのレスポンス型を定義
 interface PayPayResponse {
   resultInfo: {

@@ -15,6 +15,9 @@ interface Product {
   updatedAt: string;
 }
 
+// このルートは動的に生成されるため、ビルド時には実行されない
+export const dynamic = 'force-dynamic';
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }

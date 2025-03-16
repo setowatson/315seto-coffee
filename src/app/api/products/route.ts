@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getItems } from '@/lib/db';
 
+// このルートは動的に生成されるため、ビルド時には実行されない
+export const dynamic = 'force-dynamic';
+
 // 商品の型定義
 interface Product {
   id: string;

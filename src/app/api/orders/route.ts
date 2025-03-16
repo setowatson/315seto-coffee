@@ -3,6 +3,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { v4 as uuidv4 } from "uuid";
 
+// このルートは動的に生成されるため、ビルド時には実行されない
+export const dynamic = 'force-dynamic';
+
 // 注文の型定義
 export interface OrderItem {
   id: string;
