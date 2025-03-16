@@ -9,6 +9,8 @@ interface Product {
   price: number;
   imageUrl: string;
   stock: number;
+  grindOptions: string[];
+  weightOptions: number[];
   createdAt: string;
   updatedAt: string;
 }
@@ -16,44 +18,31 @@ interface Product {
 export async function GET() {
   try {
     // Cosmos DBから商品情報を取得
-    // 注意: 実際のデータベースが設定されるまでは、モックデータを返します
+    let products: Product[] = [];
     
-    // 本番環境では以下のようにCosmosDBからデータを取得
-    // const products = await getItems<Product>('products', 'SELECT * FROM c');
-    
-    // モックデータ
-    const products: Product[] = [
-      {
-        id: '1',
-        name: 'SETO Blend Coffee - Light Roast',
-        description: '軽やかな酸味と華やかな香りが特徴の浅煎りブレンド',
-        price: 1200,
-        imageUrl: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/coffee-beans.jpg-wXSniSHcICfSzPZnLfr8RgRn2CSnPg.jpeg',
-        stock: 50,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      },
-      {
-        id: '2',
-        name: 'SETO Blend Coffee - Medium Roast',
-        description: 'バランスの取れた味わいと豊かなコクが楽しめる中煎りブレンド',
-        price: 1300,
-        imageUrl: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/coffee-beans.jpg-wXSniSHcICfSzPZnLfr8RgRn2CSnPg.jpeg',
-        stock: 45,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      },
-      {
-        id: '3',
-        name: 'SETO Blend Coffee - Dark Roast',
-        description: '深いコクと苦味が特徴の深煎りブレンド',
-        price: 1400,
-        imageUrl: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/coffee-beans.jpg-wXSniSHcICfSzPZnLfr8RgRn2CSnPg.jpeg',
-        stock: 40,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      }
-    ];
+    try {
+      // 本番環境ではCosmosDBからデータを取得
+      products = await getItems<Product>('products', 'SELECT * FROM c');
+      console.log('Products fetched from Cosmos DB:', products.length);
+    } catch (dbError) {
+      console.warn('Failed to fetch from Cosmos DB, using mock data:', dbError);
+      
+      // データベース接続に失敗した場合はモックデータを使用
+      products = [
+        {
+          id: '1',
+          name: 'SETO Blend Coffee',
+          description: 'コーヒーの奥深い世界への「最初の一歩」をテーマにした特別なブレンドです。\n\n厳選された2種類のシングルオリジンを絶妙な配合でブレンドし、深煎りと浅煎りの絶妙なバランスを実現しました。\n\n王道のコーヒーの味が好きな方にとって、コーヒーの奥深い世界へ踏み出す「最初の一歩目」となるような、特別なコーヒーです。',
+          price: 1200,
+          imageUrl: '/images/seto-blend-package.jpeg',
+          stock: 100,
+          grindOptions: ['豆のまま', '挽いた状態', 'ドリップバッグ'],
+          weightOptions: [100],
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }
+      ];
+    }
     
     return NextResponse.json({ products }, { status: 200 });
   } catch (error) {

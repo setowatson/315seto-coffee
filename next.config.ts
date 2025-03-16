@@ -1,18 +1,16 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   /* config options here */
   images: {
-    domains: ["hebbkx1anhila5yf.public.blob.vercel-storage.com"],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'hebbkx1anhila5yf.public.blob.vercel-storage.com',
-        port: '',
-        pathname: '/**',
-      },
-    ],
+    // 外部ドメインの設定を削除し、ローカルの画像のみを使用
+  },
+  // PostCSSの設定を追加
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
