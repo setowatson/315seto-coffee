@@ -9,6 +9,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    // ビルド時のページデータ収集をスキップ
+    disableStaticGenerationForPages: ['/api/products/[id]', '/api/orders'],
+  },
 }
 
 module.exports = nextConfig 
